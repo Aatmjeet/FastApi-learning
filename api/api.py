@@ -32,9 +32,8 @@ class Cars:
         except CarInfoException as cie:
             raise HTTPException(**cie.__dict__)
 
+
 # API endpoint to get info of a particular car
-
-
 @router.get("/cars/{car_id}", response_model=Car)
 def get_car_info(car_id: int, session: Session = Depends(get_db)):
     try:
@@ -44,9 +43,8 @@ def get_car_info(car_id: int, session: Session = Depends(get_db)):
     except CarInfoException as cie:
         raise HTTPException(**cie.__dict__)
 
+
 # API to update a existing car info
-
-
 @router.put("/cars/{car_id}", response_model=Car)
 def update_car(car_id: int, new_info: CreateAndUpdateCar, session: Session = Depends(get_db)):
     try:
@@ -55,9 +53,8 @@ def update_car(car_id: int, new_info: CreateAndUpdateCar, session: Session = Dep
     except CarInfoException as cie:
         raise HTTPException(**cie.__dict__)
 
+
 # API to delete a car info from the data base
-
-
 @router.delete("/cars/{car_id}")
 def delete_car(car_id: int, session: Session = Depends(get_db)):
 

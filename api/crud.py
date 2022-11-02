@@ -4,9 +4,8 @@ from api.exceptions import CarInfoException, CarInfoInfoAlreadyExistError, CarIn
 from models.models import CarInfo
 from schemas.schemas import CreateAndUpdateCar
 
+
 # Function to get list of car info
-
-
 def get_all_cars(session: Session, limit: int, offset: int) -> List[CarInfo]:
     return session.query(CarInfo).offset(offset).limit(limit).all()
 
