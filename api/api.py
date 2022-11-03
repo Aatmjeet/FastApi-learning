@@ -9,28 +9,24 @@ from schemas.schemas import Car, CreateAndUpdateCar, PaginatedCarInfo
 router = APIRouter()
 
 
-class Cars:
-    # session: Session = Depends(get_db)
+# API to get the list of car info
+@router.get("/cars", response_model=PaginatedCarInfo)
+def list_cars(session: Session = Depends(get_db), limit: int = 10, offset: int = 0):
+    cars_list = get_all_cars(session, limit, offset)
+    response = {"limit": limit, "offset": offset, "data": cars_list}
 
-    # API to get the list of car info
-    @router.get("/cars", response_model=PaginatedCarInfo)
-    def list_cars(session: Session = Depends(get_db), limit: int = 10, offset: int = 0):
-        print("getting till here")
-        cars_list = get_all_cars(session, limit, offset)
-        response = {"limit": limit, "offset": offset, "data": cars_list}
+    return response
 
-        print("till here too")
-        return response
 
-    # API endpoint to add a car info to the database
-    @router.post("/cars")
-    def add_car(self, cars_info: CreateAndUpdateCar):
-
-        try:
-            car_info = create_car(self.session, car_info)
-            return car_info
-        except CarInfoException as cie:
-            raise HTTPException(**cie.__dict__)
+# API endpoint to add a car info to the database
+@router.post("/cars")
+def add_car(cars_info: CreateAndUpdateCar, session: Session = Depends(get_db)):
+    print(cars_info)
+    try:
+        car_output = create_car(session, cars_info)
+        return car_output
+    except CarInfoException as cie:
+        raise HTTPException(**cie.__dict__)
 
 
 # API endpoint to get info of a particular car

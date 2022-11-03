@@ -5,16 +5,16 @@ import enum
 
 
 class FuelType(str, enum.Enum):
-    petrol = "Petrol"
-    diesel = "Diesel"
+    Petrol = "Petrol"
+    Diesel = "Diesel"
 
 
 class CarInfo(Base):
     __tablename__ = "car"
 
     id = Column(Integer, primary_key=True, index=True)
-    manafaturer = Column(String)
-    ModelName = Column(String)
+    manufacturer = Column(String)
+    modelName = Column(String)
     cc = Column(Integer)
     onRoadPrice = Column(Integer)
     seatingCapacity = Column(Integer)
